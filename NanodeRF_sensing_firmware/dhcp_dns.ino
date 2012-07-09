@@ -11,19 +11,15 @@ void dhcp_dns()
   
   if (!dhcp_status){
     
-    //#ifdef UNO
-    if (UNO) { 
-	wdt_disable();
-	} 
-    //#endif 
+    #ifdef UNO
+    wdt_disable();
+    #endif 
     
     dhcp_status = ether.dhcpSetup();           // DHCP setup
     
-    //#ifdef UNO
-   if (UNO) {
-     wdt_enable(WDTO_8S);
-   }
-    //#endif
+    #ifdef UNO
+    wdt_enable(WDTO_8S);
+    #endif
     
     Serial.print("DHCP status: ");             // print
     Serial.println(dhcp_status);               // dhcp status
@@ -32,7 +28,8 @@ void dhcp_dns()
       ether.printIp("IP:  ", ether.myip);
       ether.printIp("GW:  ", ether.gwip);  
       
-      static byte dnsip[] = {8,8,8,8};  
+      static byte dnsip[] = {192,168,1,1};  
+      //static byte dnsip[] = {8,8,8,8};  
       ether.copyIp(ether.dnsip, dnsip);
       ether.printIp("DNS: ", ether.dnsip);
       //ether.copyIp(ether.hisip, hisip);                             // un-comment for posting to static IP server (no domain name)
@@ -45,19 +42,15 @@ void dhcp_dns()
   //-----------------------------------------------------------------------------------
   if (dhcp_status && !dns_status){
     
-    //#ifdef UNO
-    if (UNO) { 
-	wdt_disable();
-	} 
-    //#endif 
+    #ifdef UNO
+    //wdt_disable();
+    #endif 
     
     dns_status = ether.dnsLookup(website);    // Attempt DNS lookup
     
-   // #ifdef UNO
-    if (UNO) { 
-	wdt_enable(WDTO_8S);
-	} 
-    //#endif;
+    #ifdef UNO
+    //wdt_enable(WDTO_8S);
+    #endif;
     
     Serial.print("DNS status: ");             // print
     Serial.println(dns_status);               // dns status
