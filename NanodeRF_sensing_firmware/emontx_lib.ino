@@ -1,3 +1,5 @@
+// MOD for sensorshield (sensTX)
+
 // === SEND RF DATA ==
 void send_rf_data()
 {
@@ -5,7 +7,7 @@ void send_rf_data()
   // if ready to send + exit loop if it gets stuck as it seems too
   
   int i = 0; while (!rf12_canSend() && i<10) {rf12_recvDone(); i++;}
-  rf12_sendStart(0, &emontx, sizeof emontx);
+  rf12_sendStart(0, &sensTX, sizeof sensTX);
   
   // set the sync mode to 2 if the fuses are still the Arduino default
   // mode 3 (full powerdown) can only be used with 258 CK startup fuses
@@ -14,11 +16,10 @@ void send_rf_data()
 }
 
 // === SLEEP ==
-void emontx_sleep(int seconds) {
-  // if (emontx.battery > 3300) { 
-    for (int i=0; i<seconds; i++) { 
+void sensTX_sleep(int seconds) {
+     for (int i=0; i<seconds; i++) { 
       delay(1000); 
       if (UNO) wdt_reset();
     } 
-  // } else Sleepy::loseSomeTime(seconds*1000);
+   Sleepy::loseSomeTime(seconds*1000);
 }

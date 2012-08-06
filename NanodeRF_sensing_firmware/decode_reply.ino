@@ -1,5 +1,3 @@
-// get_header_line
-
 int get_header_line(int line,word off)
 {
   memset(line_buf,NULL,sizeof(line_buf));
@@ -26,8 +24,6 @@ int get_header_line(int line,word off)
   }
   return 0;
 }
-
-// get_reply_data
 
 int get_reply_data(word off)
 {
